@@ -1,14 +1,14 @@
-const { select, mutate, cross, stopChriteria } = require('./evolution');
-const { create } = require('./population');
+const { create, select, cross, mutate, stopChriteria } = require('./evolution');
+const { Employee } = require('./model');
 
-const INDIVIDUAL_SELECTION_RATE = 0.5;
-const NUMBERS_TO_MOVE_RATE = 0.4;
-const GENERATIONAL_JUMP = 0.75;
-const MUTATION_PROBABILITY = 0.1;
-const INITIAL_POPULATION_SIZE = 1000000;
+const BREN = Employee("Bren", [1,2,3], [4,5,6])
+const EMPLOYEES = [ BREN ];
+
+const monthDays = 30;
+const numberOfCalendars = 100;
 
 function main() {
-  let population = create(INITIAL_POPULATION_SIZE, INDIVIDUAL_SELECTION_RATE, NUMBERS_TO_MOVE_RATE);
+  let population = create(cantDays, EMPLOYEES, numberOfCalendars);
   let iteration = 1;
 
   while (stopChriteria(iteration, population)) {
