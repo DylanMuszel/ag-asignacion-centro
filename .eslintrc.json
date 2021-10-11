@@ -11,5 +11,8 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "max-len": 0,
+        "no-use-before-define": 0,
+        "no-console": 0
     }
 }
