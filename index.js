@@ -1,4 +1,4 @@
-const { create, select, cross, mutate, stopChriteria } = require('./evolution');
+const { create, select, cross, mutate, stopChriteria } = require('./genethicAlgorithm');
 const { Employee } = require('./model');
 
 const BREN = Employee("Bren", [1,2,3], [4,5,6])
