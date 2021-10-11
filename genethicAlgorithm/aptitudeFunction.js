@@ -6,11 +6,11 @@ const CONTINUOUS_EXTRA_DAY_WEIGHT = -30;
 
 function calculateAptitude(calendar, employees) {
     return repeatedEmployeesPerDayScore(calendar)
-    + employees.map(employee => freeDaysAmountPerEmployeeScore(calendar, employee)
-        + mandatoryDaysPerEmployeeScore(calendar, employee)
-        + preferredDaysPerEmployeeScore(calendar, employee)
-        + continuousWorkingDaysScore(calendar, employee)
-    ).reduce((a, b) => a + b, 0)
+        + employees.map(employee => freeDaysAmountPerEmployeeScore(calendar, employee)
+            + mandatoryDaysPerEmployeeScore(calendar, employee)
+            + preferredDaysPerEmployeeScore(calendar, employee)
+            + continuousWorkingDaysScore(calendar, employee)
+        ).reduce((a, b) => a + b, 0)
 
 }
 
@@ -30,12 +30,12 @@ function freeDaysAmountPerEmployeeScore(calendar, employee) {
 
 function mandatoryDaysPerEmployeeScore(calendar, employee) {
     let freeDays = getFreeDays(calendar, employee)
-    return employee.mandatoryDays.map(mandatoryDay => freeDays.contains(mandatoryDay) ? MANDATORY_DAY_WEIGHT : 0)
+    return employee.mandatoryDays.map(mandatoryDay => freeDays.includes(mandatoryDay) ? MANDATORY_DAY_WEIGHT : 0)
 }
 
 function preferredDaysPerEmployeeScore(calendar, employee) {
     let freeDays = getFreeDays(calendar, employee)
-    return employee.preferredDays.map(preferredDay => freeDays.contains(preferredDay) ? PREFERRED_DAY_WEIGHT : 0)
+    return employee.preferredDays.map(preferredDay => freeDays.includes(preferredDay) ? PREFERRED_DAY_WEIGHT : 0)
 }
 
 function continuousWorkingDaysScore(calendar, employee) {
@@ -49,15 +49,16 @@ function continuousWorkingDaysScore(calendar, employee) {
 function getContinuousWorkingDays(calendar, employee) {
     let freeDays = getFreeDays(calendar, employee)
     return calendar.days.reduce((accum, day) => {
-        if (!freeDays.contains(day))
+        if (!freeDays.includes(day))
             accum[accum.length - 1]++;
         else
             accum.push(0);
+        return accum
     }, [0])
 }
 
 function getFreeDays(calendar, employee) {
-    return calendar.days.filter(day => !day.employees.contains(employee)).map(freeDay => freeDay.number)
+    return calendar.days.filter(day => !day.employees.includes(employee)).map(freeDay => freeDay.number)
 }
 
 module.exports = calculateAptitude;
