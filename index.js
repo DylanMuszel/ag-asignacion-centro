@@ -1,4 +1,4 @@
-const { select, mutate, cross } = require('./evolution');
+const { select, mutate, cross, stopChriteria } = require('./evolution');
 const { create } = require('./population');
 
 const INDIVIDUAL_SELECTION_RATE = 0.5;
@@ -11,7 +11,7 @@ function main() {
   let population = create(INITIAL_POPULATION_SIZE, INDIVIDUAL_SELECTION_RATE, NUMBERS_TO_MOVE_RATE);
   let iteration = 1;
 
-  while (population.length > 0) {
+  while (stopChriteria(iteration, population)) {
     population = select(population, GENERATIONAL_JUMP);
 
     population = mutate(population, MUTATION_PROBABILITY);

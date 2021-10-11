@@ -1,9 +1,11 @@
-const mutate = require('./mutation');
 const select = require('./selection');
 const cross = require('./cross');
+const mutate = require('./mutation');
+const stopChriteria = require('./stopChriteria');
 
 module.exports = {
-  mutate,
-  cross,
   select,
+  cross,
+  mutate,
+  stopChriteria
 };
