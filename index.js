@@ -8,7 +8,7 @@ const monthDays = 30;
 const numberOfCalendars = 100;
 
 function main() {
-  let population = create(cantDays, EMPLOYEES, numberOfCalendars);
+  let population = create(monthDays, EMPLOYEES, numberOfCalendars);
   let iteration = 1;
 
   while (stopChriteria(iteration, population)) {
