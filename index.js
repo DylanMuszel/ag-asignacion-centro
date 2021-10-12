@@ -1,25 +1,21 @@
-const { select, mutate, cross } = require('./evolution');
-const { create } = require('./population');
+const { create, select, cross, mutate, stopChriteria } = require('./genethicAlgorithm');
+const { EMPLOYEES } = require('./model');
 
-const INDIVIDUAL_SELECTION_RATE = 0.5;
-const NUMBERS_TO_MOVE_RATE = 0.4;
-const GENERATIONAL_JUMP = 0.75;
-const MUTATION_PROBABILITY = 0.1;
-const INITIAL_POPULATION_SIZE = 1000000;
+const monthDays = 30;
+const numberOfCalendars = 100;
 
 function main() {
-  let population = create(INITIAL_POPULATION_SIZE, INDIVIDUAL_SELECTION_RATE, NUMBERS_TO_MOVE_RATE);
+  let population = create(monthDays, EMPLOYEES, numberOfCalendars);
   let iteration = 1;
 
-  while (population.length > 0) {
-    population = select(population, GENERATIONAL_JUMP);
+  while (stopChriteria(iteration, population)) {
+    population = select(population, EMPLOYEES);
 
-    population = mutate(population, MUTATION_PROBABILITY);
+    // population = mutate(population, MUTATION_PROBABILITY);
 
-    population = cross(population);
+    // population = cross(population);
 
     iteration += 1;
-
     console.log(`Iteration: ${iteration} with length: ${population.length}`);
   }
 
