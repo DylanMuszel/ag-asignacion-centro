@@ -11,9 +11,9 @@ function main() {
   while (stopChriteria(iteration, population)) {
     population = select(population, EMPLOYEES);
 
-    // population = mutate(population, MUTATION_PROBABILITY);
+    population = mutate(population);
 
-    // population = cross(population);
+    population = cross(population);
 
     iteration += 1;
     console.log(`Iteration: ${iteration} with length: ${population.length}`);
