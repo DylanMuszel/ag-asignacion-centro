@@ -50,3 +50,7 @@ function getFreeDays(calendar, employee) {
 }
 
 main();
+
+function bestIndividual(population) {
+  return population.sort((a, b) => calculateAptitude(b, EMPLOYEES) - calculateAptitude(a, EMPLOYEES))[0];
+}
