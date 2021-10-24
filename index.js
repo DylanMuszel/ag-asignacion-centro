@@ -12,7 +12,7 @@ function main() {
   let population = create(monthDays, EMPLOYEES, numberOfCalendars);
   let iteration = 1;
 
-  while (stopCriteria(iteration, 2000)) {
+  while (stopCriteria(iteration, 5)) {
     population = select(population, EMPLOYEES);
 
     population = mutate(population);

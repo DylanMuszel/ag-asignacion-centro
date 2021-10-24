@@ -37,20 +37,17 @@ function preferredDaysPerEmployeeScore(calendar, employee) {
 }
 
 function continuousWorkingDaysScore(calendar, employee) {
-  const continuousWorkingDays = getContinuousWorkingDays(calendar, employee);
-  return continuousWorkingDays
-    .map((cantDays) => cantDays - 4)
-    .filter((cantDays) => cantDays > 0)
-    .reduce((a, b) => a + b, 0) * CONTINUOUS_EXTRA_DAY_WEIGHT;
+  return getContinuousWorkingDays(calendar, employee) * CONTINUOUS_EXTRA_DAY_WEIGHT;
 }
 
 function getContinuousWorkingDays(calendar, employee) {
-  const freeDays = getFreeDays(calendar, employee);
-  return calendar.days.reduce((accum, day) => {
-    if (!freeDays.includes(day)) accum[accum.length - 1]++;
-    else accum.push(0);
-    return accum;
-  }, [0]);
+  var lastDay = 1;
+  var extraDays = 0;
+  getFreeDays(calendar, employee).map(day => {
+    extraDays += max(0, day - lastDay - 4);
+    lastDay = day;
+  });
+  return extraDays;
 }
 
 function getFreeDays(calendar, employee) {
