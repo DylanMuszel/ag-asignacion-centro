@@ -1,10 +1,10 @@
 function mutate(calendars) {
-  return calendars.map(calendar => {
-    if (Math.random() > 0.5) {
+  calendars.forEach(calendar => {
+    if (Math.random() > 0.9) {
       calendar.mutate();
-      return calendar;
     }
   })
+  return calendars
 }
 
 module.exports = mutate;

@@ -6,7 +6,7 @@ const { EMPLOYEES } = require('./model');
 const fs = require('fs');
 
 const monthDays = 30;
-const numberOfCalendars = 1000;
+const numberOfCalendars = 4;
 
 function main() {
   let population = create(monthDays, EMPLOYEES, numberOfCalendars);
@@ -21,6 +21,8 @@ function main() {
 
     newIndividuals = cross(newIndividuals);
     population = bestIndividuals.concat(newIndividuals);
+    console.log(calculateAptitude(bestIndividual(bestIndividuals), EMPLOYEES))
+    console.log(calculateAptitude(bestIndividual(population), EMPLOYEES))
     fs.appendFileSync('bestCandidateAptitudeHistory.csv', 
       `${JSON.stringify(population.map((individual) => calculateAptitude(individual, EMPLOYEES))
       .sort((a, b) => b - a)[0])},`
