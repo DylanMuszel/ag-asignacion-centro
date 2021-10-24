@@ -6,13 +6,13 @@ const { EMPLOYEES } = require('./model');
 const fs = require('fs');
 
 const monthDays = 30;
-const numberOfCalendars = 100;
+const numberOfCalendars = 10000;
 
 function main() {
   let population = create(monthDays, EMPLOYEES, numberOfCalendars);
   let iteration = 1;
 
-  while (stopCriteria(iteration, 5)) {
+  while (stopCriteria(iteration, 200)) {
     population = select(population, EMPLOYEES);
 
     population = mutate(population);
@@ -20,6 +20,12 @@ function main() {
     population = cross(population);
 
     population = population.concat(createNewGeneration(monthDays, EMPLOYEES, numberOfCalendars, population.length));
+
+    fs.appendFileSync('bestCandidateAptitudeHistory.csv', 
+      `${JSON.stringify(population.map((individual) => calculateAptitude(individual, EMPLOYEES))
+      .sort((a, b) => b - a)[0])},`
+    );
+
     iteration += 1;
     console.log(`Iteration: ${iteration} with length: ${population.length}`);
   }

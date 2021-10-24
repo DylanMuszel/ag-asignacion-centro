@@ -1,15 +1,16 @@
 const REPEATED_EMPLOYEES_WEIGHT = -10000;
-const FREE_DAYS_PER_EMPLOYEE_WEIGHT = -200;
-const MANDATORY_DAY_WEIGHT = 5000;
-const PREFERRED_DAY_WEIGHT = 2000;
-const CONTINUOUS_EXTRA_DAY_WEIGHT = -30;
+const FREE_DAYS_PER_EMPLOYEE_WEIGHT = -90000;
+const MANDATORY_DAY_WEIGHT = 60000;
+const PREFERRED_DAY_WEIGHT = 50000;
+const CONTINUOUS_EXTRA_DAY_WEIGHT = -3000;
 
 function calculateAptitude(calendar, employees) {
   return repeatedEmployeesPerDayScore(calendar)
         + employees.map((employee) => freeDaysAmountPerEmployeeScore(calendar, employee)
             + mandatoryDaysPerEmployeeScore(calendar, employee)
             + preferredDaysPerEmployeeScore(calendar, employee)
-            + continuousWorkingDaysScore(calendar, employee)).reduce((a, b) => a + b, 0);
+            + continuousWorkingDaysScore(calendar, employee))
+          .reduce((a, b) => a + b, 0);
 }
 
 function repeatedEmployeesPerDayScore(calendar) {
@@ -41,9 +42,9 @@ function continuousWorkingDaysScore(calendar, employee) {
 }
 
 function getContinuousWorkingDays(calendar, employee) {
-  var lastDay = 1;
-  var extraDays = 0;
-  getFreeDays(calendar, employee).map(day => {
+  let lastDay = 1;
+  let extraDays = 0;
+  getFreeDays(calendar, employee).map((day) => {
     extraDays += Math.max(0, day - lastDay - 4);
     lastDay = day;
   });
