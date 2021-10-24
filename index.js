@@ -14,18 +14,13 @@ function main() {
 
   while (stopCriteria(iteration, 200)) {
     let bestIndividuals = select(population, EMPLOYEES);
-    console.log("BestIndividuals : " + bestIndividuals.length)
 
     let newIndividuals = [...bestIndividuals]
 
     newIndividuals = mutate(newIndividuals);
-    console.log("newIndividuals1 : " + newIndividuals.length)
 
     newIndividuals = cross(newIndividuals);
     population = bestIndividuals.concat(newIndividuals);
-    console.log("newIndividuals2 : " + newIndividuals.length)
-    console.log("population : " + population.length)
-
     fs.appendFileSync('bestCandidateAptitudeHistory.csv', 
       `${JSON.stringify(population.map((individual) => calculateAptitude(individual, EMPLOYEES))
       .sort((a, b) => b - a)[0])},`
