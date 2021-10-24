@@ -6,13 +6,13 @@ const { EMPLOYEES } = require('./model');
 const fs = require('fs');
 
 const monthDays = 30;
-const numberOfCalendars = 1000;
+const numberOfCalendars = 500;
 
 function main() {
   let population = create(monthDays, EMPLOYEES, numberOfCalendars);
   let iteration = 1;
 
-  while (stopCriteria(iteration, 200)) {
+  while (stopCriteria(iteration, 100)) {
     let bestIndividuals = select(population, EMPLOYEES);
 
     let newIndividuals = [...bestIndividuals]
