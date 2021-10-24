@@ -1,15 +1,17 @@
 const create = require('./create');
+const createNewGeneration = require('./createNewGeneration');
 const select = require('./selection');
 const cross = require('./cross');
 const mutate = require('./mutation');
-const stopChriteria = require('./stopChriteria');
-const calculateAptitude = require('./aptitudeFunction')
+const stopCriteria = require('./stopCriteria');
+const calculateAptitude = require('./aptitudeFunction');
 
 module.exports = {
   create,
+  createNewGeneration,
   select,
   cross,
   mutate,
-  stopChriteria,
-  calculateAptitude
+  stopCriteria,
+  calculateAptitude,
 };
