@@ -31,6 +31,7 @@ function main() {
   }
   const individualsWithScores = population
     .map((individual) => ({ 
+      individual,
       freeDays: EMPLOYEES.map((employee) => ({
         employee: employee.name,
         days: getFreeDays(individual, employee),
