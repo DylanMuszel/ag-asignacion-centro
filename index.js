@@ -25,9 +25,9 @@ function main() {
   }
   const individualsWithScores = population
     .map((individual) => ({ 
-      days: individual.days.map((day) => ({
-        number: day.number,
-        employees: day.employees.map((employee) => employee.name)
+      freeDays: EMPLOYEES.map((employee) => ({
+        employee: employee.name,
+        days: getFreeDays(individual, employee),
       })), 
       score: calculateAptitude(individual, EMPLOYEES) 
     }))
@@ -36,6 +36,10 @@ function main() {
   console.log('Finished!');
 
   fs.writeFileSync('results.json', JSON.stringify({ "results": individualsWithScores }));
+}
+
+function getFreeDays(calendar, employee) {
+  return calendar.days.filter((day) => !day.employees.includes(employee)).map((freeDay) => freeDay.number);
 }
 
 main();
