@@ -1,25 +1,25 @@
 /* eslint-disable no-unused-expressions */
 const {
-  create, createNewGeneration, select, cross, mutate, stopCriteria, calculateAptitude,
+  create, select, cross, mutate, stopCriteria, calculateAptitude,
 } = require('./genethicAlgorithm');
 const { EMPLOYEES } = require('./model');
 const fs = require('fs');
 
 const monthDays = 30;
-const numberOfCalendars = 10000;
+const numberOfCalendars = 1000;
 
 function main() {
   let population = create(monthDays, EMPLOYEES, numberOfCalendars);
   let iteration = 1;
 
   while (stopCriteria(iteration, 200)) {
-    population = select(population, EMPLOYEES);
+    let bestIndividuals = select(population, EMPLOYEES);
 
-    population = mutate(population);
+    let newIndividuals = mutate(bestIndividuals);
 
-    population = cross(population);
+    newIndividuals = cross(newIndividuals);
 
-    population = population.concat(createNewGeneration(monthDays, EMPLOYEES, numberOfCalendars, population.length));
+    population = bestIndividuals.concat(newIndividuals);
 
     fs.appendFileSync('bestCandidateAptitudeHistory.csv', 
       `${JSON.stringify(population.map((individual) => calculateAptitude(individual, EMPLOYEES))
