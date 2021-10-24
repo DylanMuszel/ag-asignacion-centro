@@ -1,9 +1,10 @@
 function mutate(calendars) {
-  if (Math.random() < 0.8) {
-    calendars[Math.floor(Math.random() * calendars.length)].mutate();
-  }
-  
-  return calendars
+  return calendars.map(calendar => {
+    if (Math.random() > 0.5) {
+      calendar.mutate();
+      return calendar;
+    }
+  })
 }
 
 module.exports = mutate;
