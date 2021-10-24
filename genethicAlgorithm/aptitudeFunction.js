@@ -44,7 +44,7 @@ function getContinuousWorkingDays(calendar, employee) {
   var lastDay = 1;
   var extraDays = 0;
   getFreeDays(calendar, employee).map(day => {
-    extraDays += max(0, day - lastDay - 4);
+    extraDays += Math.max(0, day - lastDay - 4);
     lastDay = day;
   });
   return extraDays;
