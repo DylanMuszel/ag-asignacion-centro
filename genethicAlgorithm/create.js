@@ -12,7 +12,7 @@ function createCalendar(cantDays, employees) {
 }
 
 function createDay(number, employees){
-  let randomEmployees = [...Array(4)].map(_ => employees[Math.floor(Math.random()*employees.length)])
+  let randomEmployees = employees.sort((a, b) => 0.5 - Math.random()).slice(0, 4);
   return new Day(number, randomEmployees)
 }
 
