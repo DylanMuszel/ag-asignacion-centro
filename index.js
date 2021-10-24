@@ -3,6 +3,7 @@ const {
   create, createNewGeneration, select, cross, mutate, stopCriteria, calculateAptitude,
 } = require('./genethicAlgorithm');
 const { EMPLOYEES } = require('./model');
+const fs = require('fs');
 
 const monthDays = 30;
 const numberOfCalendars = 100;
@@ -22,8 +23,19 @@ function main() {
     iteration += 1;
     console.log(`Iteration: ${iteration} with length: ${population.length}`);
   }
-  const individualsWithScores = population.map((individual) => ({ individual, score: calculateAptitude(individual, EMPLOYEES) }));
+  const individualsWithScores = population
+    .map((individual) => ({ 
+      days: individual.days.map((day) => ({
+        number: day.number,
+        employees: day.employees.map((employee) => employee.name)
+      })), 
+      score: calculateAptitude(individual, EMPLOYEES) 
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 20);
   console.log('Finished!');
+
+  fs.writeFileSync('results.json', JSON.stringify({ "results": individualsWithScores }));
 }
 
 main();
