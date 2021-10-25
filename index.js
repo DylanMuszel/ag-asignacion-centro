@@ -12,7 +12,7 @@ function main() {
   let population = create(monthDays, EMPLOYEES, numberOfCalendars);
   let iteration = 1;
 
-  while (stopCriteria(iteration, 100)) {
+  while (stopCriteria(iteration, 200)) {
     let bestIndividuals = select([...population], EMPLOYEES);
 
     let newIndividuals = [...bestIndividuals]

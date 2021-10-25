@@ -1,7 +1,7 @@
 const REPEATED_EMPLOYEES_WEIGHT = -10;
 const FREE_DAYS_PER_EMPLOYEE_WEIGHT = -90;
-const MANDATORY_DAY_WEIGHT = 100;
-const PREFERRED_DAY_WEIGHT = 10;
+const MANDATORY_DAY_WEIGHT = 60;
+const PREFERRED_DAY_WEIGHT = 50;
 const CONTINUOUS_EXTRA_DAY_WEIGHT = -3;
 
 function calculateAptitude(calendar, employees) {
