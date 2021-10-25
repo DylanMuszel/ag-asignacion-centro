@@ -1,10 +1,9 @@
-const util = require('util');
-
 function mutate(calendars) {
-  if (Math.random() < 0.8) {
-    calendars[Math.floor(Math.random() * calendars.length)].mutate();
-  }
-  
+  calendars.forEach(calendar => {
+    if (Math.random() > 0.7) {
+      calendar.mutate();
+    }
+  })
   return calendars
 }
 

@@ -10,8 +10,7 @@ function cross(population) {
       index2 = Math.floor(Math.random() * population.length);
     }
     var children = crossIndividuals(population[index1], population[index2]);
-    population.splice(index1, 1);
-    population.splice(index2, 1);
+    population = population.filter((el, index) => index != index1 && index != index2 )
     newPopulation.push(children[0], children[1]);
   }
   return newPopulation;

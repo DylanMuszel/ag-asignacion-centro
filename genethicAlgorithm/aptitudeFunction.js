@@ -1,15 +1,16 @@
-const REPEATED_EMPLOYEES_WEIGHT = -1000;
-const FREE_DAYS_PER_EMPLOYEE_WEIGHT = -200;
-const MANDATORY_DAY_WEIGHT = 5000;
-const PREFERRED_DAY_WEIGHT = 2000;
-const CONTINUOUS_EXTRA_DAY_WEIGHT = -30;
+const REPEATED_EMPLOYEES_WEIGHT = -10;
+const FREE_DAYS_PER_EMPLOYEE_WEIGHT = -90;
+const MANDATORY_DAY_WEIGHT = 60;
+const PREFERRED_DAY_WEIGHT = 50;
+const CONTINUOUS_EXTRA_DAY_WEIGHT = -3;
 
 function calculateAptitude(calendar, employees) {
   return repeatedEmployeesPerDayScore(calendar)
         + employees.map((employee) => freeDaysAmountPerEmployeeScore(calendar, employee)
             + mandatoryDaysPerEmployeeScore(calendar, employee)
             + preferredDaysPerEmployeeScore(calendar, employee)
-            + continuousWorkingDaysScore(calendar, employee)).reduce((a, b) => a + b, 0);
+            + continuousWorkingDaysScore(calendar, employee))
+          .reduce((a, b) => a + b, 0);
 }
 
 function repeatedEmployeesPerDayScore(calendar) {
@@ -19,7 +20,6 @@ function repeatedEmployeesPerDayScore(calendar) {
     return (employeesPerDay === 4) ? 0 : dayWeight;
   }).reduce((a, b) => a + b, 0);
 }
-
 function freeDaysAmountPerEmployeeScore(calendar, employee) {
   const freeDays = getFreeDays(calendar, employee).length;
   return (freeDays === 6) ? 0 : FREE_DAYS_PER_EMPLOYEE_WEIGHT;
@@ -37,20 +37,18 @@ function preferredDaysPerEmployeeScore(calendar, employee) {
 }
 
 function continuousWorkingDaysScore(calendar, employee) {
-  const continuousWorkingDays = getContinuousWorkingDays(calendar, employee);
-  return continuousWorkingDays
-    .map((cantDays) => cantDays - 4)
-    .filter((cantDays) => cantDays > 0)
-    .reduce((a, b) => a + b, 0) * CONTINUOUS_EXTRA_DAY_WEIGHT;
+  return getContinuousWorkingDays(calendar, employee) * CONTINUOUS_EXTRA_DAY_WEIGHT;
 }
 
 function getContinuousWorkingDays(calendar, employee) {
-  const freeDays = getFreeDays(calendar, employee);
-  return calendar.days.reduce((accum, day) => {
-    if (!freeDays.includes(day)) accum[accum.length - 1]++;
-    else accum.push(0);
-    return accum;
-  }, [0]);
+  let lastDay = 1;
+  let extraDays = 0;
+  getFreeDays(calendar, employee).map((day) => {
+    extraDays += Math.max(0, day - lastDay - 4);
+    lastDay = day;
+  });
+  extraDays += Math.max(0, 30 - lastDay - 4);
+  return extraDays;
 }
 
 function getFreeDays(calendar, employee) {
